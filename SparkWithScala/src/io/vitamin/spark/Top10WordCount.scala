@@ -1,7 +1,11 @@
 package io.vitamin.spark
 
+import java.nio.charset.CodingErrorAction
+
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkContext
+
+import scala.io.Codec
 
 /**
   * Created by vitamin on 06/04/2017.
@@ -10,6 +14,11 @@ object Top10WordCount {
 
    def main(args: Array[String]) ={
      Logger.getLogger("org").setLevel(Level.ERROR)
+
+     implicit val codec = Codec("UTF-8")
+     codec.onMalformedInput(CodingErrorAction.REPLACE)
+     codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
+
      val sc = new SparkContext("local[*]", "Top10WordCount")
      val dataRDD = sc.textFile("../data/book.txt")
 

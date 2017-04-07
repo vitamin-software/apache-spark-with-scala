@@ -1,7 +1,11 @@
 package io.vitamin.spark
 
+import java.nio.charset.CodingErrorAction
+
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.SparkContext
+
+import scala.io.Codec
 
 /**
   * Created by vitamin on 07/04/2017.
@@ -14,6 +18,10 @@ object MovieDataAnalyser {
 
     // Set the log level to only print errors
     Logger.getLogger("org").setLevel(Level.ERROR)
+
+    implicit val codec = Codec("UTF-8")
+    codec.onMalformedInput(CodingErrorAction.REPLACE)
+    codec.onUnmappableCharacter(CodingErrorAction.REPLACE)
 
     // Create a SparkContext using every core of the local machine, named RatingsCounter
     val sc = new SparkContext("local[*]", "MovieDataAnalyser")
