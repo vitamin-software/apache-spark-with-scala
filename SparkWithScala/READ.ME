@@ -1,0 +1,21 @@
+# Creates the jar
+>> sbt assembly
+
+# running the jar on the cluster
+ --master # cluster manager
+ --num-executors # number of executors to use - 2 is default
+ --executor-memory # executor/worker memory
+ --total-executor-cores # Maximum number of cores the driver can consume - upper limit
+
+
+spark-submit <NAME-OF-THE-JAR> --class <MainClass> <PARAMS>
+
+// Configuration Priority Hierarchy
+In driver program > command line > cluster configuration
+
+
+// Local spark UI
+http://127.0.0.1:4040
+
+Timeout / missing heartbeat ==> Partitioning issue, memory issue, need to use bigger cluster
+
